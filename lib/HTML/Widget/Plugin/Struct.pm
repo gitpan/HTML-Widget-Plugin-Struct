@@ -11,13 +11,13 @@ HTML::Widget::Plugin::Struct - dump data structures for CGI::Expand expansion
 
 =head1 VERSION
 
-version 0.002
+version 0.003
 
-  $Id: /my/cs/projects/HTML-Widget-Plugin-Struct/trunk/lib/HTML/Widget/Plugin/Struct.pm 31511 2007-05-04T23:15:17.400963Z rjbs  $
+  $Id: /my/cs/projects/HTML-Widget-Plugin-Struct/trunk/lib/HTML/Widget/Plugin/Struct.pm 32001 2007-07-09T17:01:12.968562Z rjbs  $
 
 =cut
 
-our $VERSION = '0.002';
+our $VERSION = '0.003';
 
 =head1 DESCRIPTION
 
