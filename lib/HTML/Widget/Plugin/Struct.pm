@@ -1,63 +1,18 @@
-
 use strict;
 use warnings;
-
 package HTML::Widget::Plugin::Struct;
-use base qw(HTML::Widget::Plugin);
+{
+  $HTML::Widget::Plugin::Struct::VERSION = '0.004';
+}
+use parent qw(HTML::Widget::Plugin);
+# ABSTRACT: dump data structures for CGI::Expand expansion
 
-=head1 NAME
-
-HTML::Widget::Plugin::Struct - dump data structures for CGI::Expand expansion
-
-=head1 VERSION
-
-version 0.003
-
-  $Id: /my/cs/projects/HTML-Widget-Plugin-Struct/trunk/lib/HTML/Widget/Plugin/Struct.pm 32001 2007-07-09T17:01:12.968562Z rjbs  $
-
-=cut
-
-our $VERSION = '0.003';
-
-=head1 DESCRIPTION
-
-This plugin provides a means to dump a (somewhat) complex Perl data structure
-to hidden widgets which can then be reconstructed by L<CGI::Expand>.
-
-=cut
 
 use Scalar::Util ();
 
-=head1 METHODS
-
-=head2 provided_widgets
-
-This plugin provides the following widgets: struct
-
-=cut
 
 sub provided_widgets { qw(struct) }
 
-=head2 struct
-
-C<struct> is the only widget provided by this plugin.  It accepts four
-arguments:
-
- * name  - the base name for the widget (required, will default to id if given)
- * id    - the base id for the widget (optional)
- * class - a class to apply to each element generated (optional)
- * value - the structure to represent
-
-The value can be an arbitrarily deep structure built from simple scalars, hash
-references, and array references.  The inclusion of any other kind of data will
-cause an exception to be raised.
-
-References which appear twice will be treated as multiple occurances of
-identical structures.  It won't be possible to tell that they were originally
-references to the same datum.  Any circularity in the structure will cause an
-exception to be raised.
-
-=cut
 
 sub struct {
   my ($self, $factory, $arg) = @_;
@@ -167,19 +122,70 @@ sub _assert_value_ok {
   Carp::croak "can't serialize $ref references" unless $DUMPER_FOR{ $ref };
 }
 
+
+1;
+
+__END__
+
+=pod
+
+=head1 NAME
+
+HTML::Widget::Plugin::Struct - dump data structures for CGI::Expand expansion
+
+=head1 VERSION
+
+version 0.004
+
+=head1 DESCRIPTION
+
+This plugin provides a means to dump a (somewhat) complex Perl data structure
+to hidden widgets which can then be reconstructed by L<CGI::Expand>.
+
+=head1 METHODS
+
+=head2 provided_widgets
+
+This plugin provides the following widgets: struct
+
+=head2 struct
+
+C<struct> is the only widget provided by this plugin.  It accepts four
+arguments:
+
+ * name  - the base name for the widget (required, will default to id if given)
+ * id    - the base id for the widget (optional)
+ * class - a class to apply to each element generated (optional)
+ * value - the structure to represent
+
+The value can be an arbitrarily deep structure built from simple scalars, hash
+references, and array references.  The inclusion of any other kind of data will
+cause an exception to be raised.
+
+References which appear twice will be treated as multiple occurances of
+identical structures.  It won't be possible to tell that they were originally
+references to the same datum.  Any circularity in the structure will cause an
+exception to be raised.
+
 =head1 TODO
 
- * improve the test suite
+=over 4
+
+=item *
+
+improve the test suite
+
+=back
 
 =head1 AUTHOR
 
-Ricardo SIGNES <C<rjbs @ cpan.org>>
+Ricardo SIGNES
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2007, Ricardo SIGNES.  This is free software, released under the
-same terms as perl itself.
+This software is copyright (c) 2007 by Ricardo SIGNES.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut
-
-1;

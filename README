@@ -1,8 +1,13 @@
 
-README for HTML-Widget-Plugin-Struct
 
-This module provide an HTML::Widget::Factory plugin for dumping deep structs,
-so that they can later be reconstituted with CGI::Expand.
+This archive contains the distribution HTML-Widget-Plugin-Struct,
+version 0.004:
 
-Please see the POD.
+  dump data structures for CGI::Expand expansion
+
+This software is copyright (c) 2007 by Ricardo SIGNES.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
 
