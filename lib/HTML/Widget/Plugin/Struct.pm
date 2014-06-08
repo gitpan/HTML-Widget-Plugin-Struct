@@ -1,18 +1,47 @@
 use strict;
 use warnings;
 package HTML::Widget::Plugin::Struct;
-{
-  $HTML::Widget::Plugin::Struct::VERSION = '0.004';
-}
-use parent qw(HTML::Widget::Plugin);
 # ABSTRACT: dump data structures for CGI::Expand expansion
+$HTML::Widget::Plugin::Struct::VERSION = '0.005';
+use parent qw(HTML::Widget::Plugin);
 
+#pod =head1 DESCRIPTION
+#pod
+#pod This plugin provides a means to dump a (somewhat) complex Perl data structure
+#pod to hidden widgets which can then be reconstructed by L<CGI::Expand>.
+#pod
+#pod =cut
 
 use Scalar::Util ();
 
+#pod =method provided_widgets
+#pod
+#pod This plugin provides the following widgets: struct
+#pod
+#pod =cut
 
 sub provided_widgets { qw(struct) }
 
+#pod =method struct
+#pod
+#pod C<struct> is the only widget provided by this plugin.  It accepts four
+#pod arguments:
+#pod
+#pod  * name  - the base name for the widget (required, will default to id if given)
+#pod  * id    - the base id for the widget (optional)
+#pod  * class - a class to apply to each element generated (optional)
+#pod  * value - the structure to represent
+#pod
+#pod The value can be an arbitrarily deep structure built from simple scalars, hash
+#pod references, and array references.  The inclusion of any other kind of data will
+#pod cause an exception to be raised.
+#pod
+#pod References which appear twice will be treated as multiple occurances of
+#pod identical structures.  It won't be possible to tell that they were originally
+#pod references to the same datum.  Any circularity in the structure will cause an
+#pod exception to be raised.
+#pod
+#pod =cut
 
 sub struct {
   my ($self, $factory, $arg) = @_;
@@ -122,6 +151,12 @@ sub _assert_value_ok {
   Carp::croak "can't serialize $ref references" unless $DUMPER_FOR{ $ref };
 }
 
+#pod =head1 TODO
+#pod
+#pod =for :list
+#pod * improve the test suite
+#pod
+#pod =cut
 
 1;
 
@@ -129,13 +164,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 HTML::Widget::Plugin::Struct - dump data structures for CGI::Expand expansion
 
 =head1 VERSION
 
-version 0.004
+version 0.005
 
 =head1 DESCRIPTION
 
